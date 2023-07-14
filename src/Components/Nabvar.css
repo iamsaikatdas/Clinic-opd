@@ -30,7 +30,7 @@
   letter-spacing: 1px;
 }
 /* doctor */
-.show-doctor{
+.show-doctor, .doctor{
   width: 90%;
   margin: 3rem auto;
 }
@@ -44,4 +44,8 @@
   background-color: gray;
   color: white;
   border-radius: 6px;
+}
+a{
+  text-decoration: none;
+  color: black;
 }
