@@ -18,22 +18,38 @@ const Nabvar = () => {
         >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center justify-content-between">
             <li className="nav-item  ">
-              <Link className="nav-link active" aria-current="page" href="#">
+              <Link
+                className="nav-link active"
+                aria-current="page"
+                to="/patient"
+              >
                 Patient
               </Link>
             </li>
             <li className="nav-item  ">
-              <Link className="nav-link active" aria-current="page" href="#">
+              <Link
+                className="nav-link active"
+                aria-current="page"
+                to="/doctor"
+              >
                 Doctor
               </Link>
             </li>
             <li className="nav-item  ">
-              <Link className="nav-link active" aria-current="page" href="#">
+              <Link
+                className="nav-link active"
+                aria-current="page"
+                to="/appointment"
+              >
                 Appointment
               </Link>
             </li>
             <li className="nav-item  ">
-              <Link className="nav-link active" aria-current="page" href="#">
+              <Link
+                className="nav-link active"
+                aria-current="page"
+                to="/schedule"
+              >
                 Schedule
               </Link>
             </li>

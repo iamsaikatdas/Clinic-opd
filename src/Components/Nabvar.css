@@ -29,3 +29,19 @@
   font-size: 15px;
   letter-spacing: 1px;
 }
+/* doctor */
+.show-doctor{
+  width: 90%;
+  margin: 3rem auto;
+}
+.ed{
+  cursor: pointer;
+  /* border: 1px solid red; */
+  padding: 6px 12px;
+  transition: ease-in-out 0.3s;
+}
+.ed:hover{
+  background-color: gray;
+  color: white;
+  border-radius: 6px;
+}

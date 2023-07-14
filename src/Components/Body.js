@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Nabvar.css";
+import axios from "axios";
 
 const Body = () => {
   return (
