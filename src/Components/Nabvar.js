@@ -1,44 +1,46 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Input, Nav, NavItem, NavLink } from "reactstrap";
 import "./Nabvar.css";
 
 const Nabvar = () => {
   return (
-    <div>
-      <Nav id="navLink">
-        <NavItem id="navItem">
-          <NavLink active tag={Link} to="/">
-            <h3>
-              My <span>Blogs</span>
-            </h3>
-          </NavLink>
-        </NavItem>
-        <NavItem id="navItem">
-          <NavLink tag={Link} to="/about">
-            About
-          </NavLink>
-        </NavItem>
-        <NavItem id="navItem">
-          <NavLink tag={Link} to="Login">
-            Login
-          </NavLink>
-        </NavItem>
-        <NavItem id="navItem">
-          <NavLink tag={Link} to="/singup">
-            Sing Up
-          </NavLink>
-        </NavItem>
-
-        <NavItem id="navItem">
-          <Input id="searchNav" placeholder="Search Here" />
-        </NavItem>
-
-        <NavItem id="navItem">
-          <Button>Search</Button>
-        </NavItem>
-      </Nav>
-    </div>
+    <nav
+      className="navbar navbar-expand-lg bg-secondary-subtle pb-2 text-white "
+      id="nav"
+    >
+      <div className="container-fluid text-white d-flex align-items-center justify-content-between">
+        <Link className="navbar-brand fs-2 fw-bold" to={"/"}>
+          Clinic OPD
+        </Link>
+        <div
+          className="collapse navbar-collapse ms-4"
+          id="navbarSupportedContent"
+        >
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center justify-content-between">
+            <li className="nav-item  ">
+              <Link className="nav-link active" aria-current="page" href="#">
+                Patient
+              </Link>
+            </li>
+            <li className="nav-item  ">
+              <Link className="nav-link active" aria-current="page" href="#">
+                Doctor
+              </Link>
+            </li>
+            <li className="nav-item  ">
+              <Link className="nav-link active" aria-current="page" href="#">
+                Appointment
+              </Link>
+            </li>
+            <li className="nav-item  ">
+              <Link className="nav-link active" aria-current="page" href="#">
+                Schedule
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 };
 
