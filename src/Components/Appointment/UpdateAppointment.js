@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const UpdateAppointment = () => {
-  const id = useParams();
+  const { id } = useParams();
   // submit form
   const [patient, setPatient] = useState({
     firstName: "",
