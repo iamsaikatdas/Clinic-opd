@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../Nabvar.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const Patient = () => {
-  // get all patient
-  const [allPatient, setAllPatient] = useState();
-  const base_url = "http://localhost:8102/patient/getAll";
-  useEffect(() => {
-    axios.get(base_url).then((res) => setAllPatient(res.data));
-  }, []);
-
-  // add patient
+const PatientUpdate = () => {
+  const id = useParams();
+  // submit form
   const [patient, setPatient] = useState({
     firstName: "",
     lastName: "",
@@ -24,78 +18,18 @@ const Patient = () => {
     const value = e.target.value;
     setPatient({ ...patient, [e.target.name]: value });
   };
-  const HandelSubmit = (e) => {
+  const HandelSubmit = async (e) => {
     e.preventDefault();
 
-    const base_url = "http://localhost:8102/patient/add";
-    axios
+    const base_url = "http://localhost:8102/patient/update/" + id;
+    await axios
       .post(base_url, patient)
       .then((res) => alert("Doctor added successfully."))
       .catch((e) => console.log(e));
   };
 
-  // DELETE patient
-  const DeletePatient = async (id) => {
-    const delete_base_url = `http://localhost:8102/patient/delete/${id}`;
-    axios.delete(delete_base_url).then((res) => {
-      console.log(res);
-      alert("Doctor deleted successfully", id);
-    });
-  };
-
   return (
     <>
-      <div className="show-doctor">
-        <div className="container">
-          <h1>All Patient</h1>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Sl No.</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Contact Details</th>
-                <th>Medical History</th>
-                <th>Insurance Details</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            {allPatient ? (
-              <tbody>
-                {allPatient?.map((d) => {
-                  return (
-                    <>
-                      <tr key={d.patientId}>
-                        <td>{d.patientId}</td>
-                        <td>{d.firstName}</td>
-                        <td>{d.lastName}</td>
-                        <td>{d.contactDetails}</td>
-                        <td>{d.medicalHistory}</td>
-                        <td>{d.insuranceDetails}</td>
-                        <td className="d-flex justify-content-around align-items-center">
-                          <p className="ed">
-                            <Link to={`/doctor/updateDoctor/${d.patientId}`}>
-                              Edit
-                            </Link>
-                          </p>
-                          <p
-                            className="ed"
-                            onClick={() => DeletePatient(d.patientId)}
-                          >
-                            Delete
-                          </p>
-                        </td>
-                      </tr>
-                    </>
-                  );
-                })}
-              </tbody>
-            ) : (
-              "Please add doctor"
-            )}
-          </table>
-        </div>
-      </div>
       <div className="doctor">
         <h1>Add Patient</h1>
         <form onSubmit={HandelSubmit}>
@@ -175,4 +109,4 @@ const Patient = () => {
   );
 };
 
-export default Patient;
+export default PatientUpdate;
