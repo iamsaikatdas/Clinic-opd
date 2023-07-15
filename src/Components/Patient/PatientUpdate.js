@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../Nabvar.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -11,7 +11,7 @@ const PatientUpdate = () => {
     lastName: "",
     contactDetails: "",
     medicalHistory: "",
-    insuranceDetails:""
+    insuranceDetails: "",
   });
 
   const handleChange = (e) => {
@@ -21,7 +21,7 @@ const PatientUpdate = () => {
   const HandelSubmit = async (e) => {
     e.preventDefault();
 
-    const base_url = "http://localhost:8102/patient/update/"+id;
+    const base_url = "http://localhost:8102/patient/update/" + id;
     await axios
       .post(base_url, patient)
       .then((res) => alert("Doctor added successfully."))
@@ -74,7 +74,7 @@ const PatientUpdate = () => {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Medical History
             </label>
             <input
@@ -87,7 +87,7 @@ const PatientUpdate = () => {
             />
           </div>
           <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Insurance Details
             </label>
             <input
