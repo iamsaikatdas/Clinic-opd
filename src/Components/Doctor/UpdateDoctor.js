@@ -4,7 +4,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const UpdateDoctor = () => {
-  const id = useParams();
+  const { id } = useParams();
+  console.log("udpatedoctor", id);
   // submit form
   const [doctor, setDoctor] = useState({
     firstName: "",

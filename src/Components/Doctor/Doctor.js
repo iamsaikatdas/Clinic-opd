@@ -3,25 +3,12 @@ import "../Nabvar.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
-const DeleteDoctor = async (id)=>{
-  const base_url = `http://localhost:8100/doctor/delete/${id}`;
-  await axios.delete(base_url).then((res) => {
-    console.log(res);
-    alert("Doctor deleted successfully");
-  });
-}
-
 const Doctor = () => {
   const [allDoctor, setAllDoctor] = useState();
-
   const base_url = "http://localhost:8100/doctor/getAll";
   useEffect(() => {
     axios.get(base_url).then((res) => setAllDoctor(res.data));
-    //console.log(res));
-    // setAllDoctor(res.data[0].content));
   }, []);
-  // console.log(allDoctor);
 
   // submit for
   const [doctor, setDoctor] = useState({
@@ -38,7 +25,6 @@ const Doctor = () => {
 
   const HandelSubmit = async (e) => {
     e.preventDefault();
-
     const base_url = "http://localhost:8100/doctor/add";
     await axios
       .post(base_url, doctor)
@@ -47,8 +33,12 @@ const Doctor = () => {
   };
 
   // DELETE doctor
-  function deleteDoctor(id){
-    DeleteDoctor(id)
+  const DeleteDoctor = async (id) => {
+    const base_url = `http://localhost:8100/doctor/delete/${id}`;
+    await axios.delete(base_url).then((res) => {
+      console.log(res);
+      alert("Doctor deleted successfully");
+    });
   };
 
   return (
@@ -84,7 +74,10 @@ const Doctor = () => {
                               Edit
                             </Link>
                           </p>
-                          <p className="ed" onClick={deleteDoctor(d.doctorId)}>
+                          <p
+                            className="ed"
+                            onClick={() => DeleteDoctor(d.doctorId)}
+                          >
                             Delete
                           </p>
                         </td>
@@ -148,12 +141,12 @@ const Doctor = () => {
             </label>
             <select
               name="specialization"
-              class="form-select"
+              className="form-select"
               aria-label="Default select example"
               value={doctor.specialization}
               onChange={(e) => handleChange(e)}
             >
-              <option selected>Select One</option>
+              <option defaultValue>Select One</option>
               <option value="Cardiology">Cardiology</option>
               <option value="Neurology">Neurology</option>
               <option value="Gyanacology">Gyanacology</option>
