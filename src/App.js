@@ -9,6 +9,9 @@ import Patient from "./Components/Patient/Patient";
 import PatientUpdate from "./Components/Patient/PatientUpdate";
 import Appointment from "./Components/Appointment/Appointment";
 import UpdateAppointment from "./Components/Appointment/UpdateAppointment";
+import Schedule from "./Components/Schedule/Schedule";
+import UpdateSchedule from "./Components/Schedule/UpdateSchedule";
+// import Schedule from "./Components/Schedule/UpdateSchedule";
 
 function App() {
   return (
@@ -24,6 +27,11 @@ function App() {
         <Route
           path="/appointment/updateAppointment/:id"
           element={<UpdateAppointment />}
+        />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route
+          path="/schedule/updateSchedule/:id"
+          element={<UpdateSchedule />}
         />
       </Routes>
       <Footer />

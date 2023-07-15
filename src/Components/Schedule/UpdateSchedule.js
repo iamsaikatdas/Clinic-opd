@@ -3,99 +3,86 @@ import "../Nabvar.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const PatientUpdate = () => {
-  const id = useParams();
+const UpdateSchedule = () => {
+  const { id } = useParams();
   // submit form
-  const [patient, setPatient] = useState({
-    firstName: "",
-    lastName: "",
-    contactDetails: "",
-    medicalHistory: "",
-    insuranceDetails: "",
+  // add patient
+  const [schedule, setSchedule] = useState({
+    dayOfWeek: "",
+    timeSlot: "",
+    availability: "",
+    doctorId: "",
   });
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setPatient({ ...patient, [e.target.name]: value });
+    setSchedule({ ...schedule, [e.target.name]: value });
   };
-  const HandelSubmit = async (e) => {
+  const HandelSubmit = (e) => {
     e.preventDefault();
 
-    const base_url = "http://localhost:8102/patient/update/" + id;
-    await axios
-      .post(base_url, patient)
-      .then((res) => alert("Doctor added successfully."))
+    const base_url = "http://localhost:8320/schedule/update" + id;
+    axios
+      .post(base_url, schedule)
+      .then((res) => alert("Schedule updated successfully."))
       .catch((e) => console.log(e));
   };
 
   return (
     <>
       <div className="doctor">
-        <h1>Add Patient</h1>
+        <h1>Update Schedule</h1>
         <form onSubmit={HandelSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
-              First Name
+              Day of Week
             </label>
             <input
               type="text"
-              name="firstName"
+              name="dayOfWek"
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              value={patient.firstName}
+              value={schedule.dayOfWeek}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Last Name
+              Time Slot
             </label>
             <input
               type="text"
-              name="lastName"
+              name="timeSlot"
               className="form-control"
               id="exampleInputPassword1"
-              value={patient.lastName}
+              value={schedule.timeSlot}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Contact Details
+              Availability
             </label>
             <input
               type="text"
-              name="contactDetails"
+              name="availability"
               className="form-control"
               id="exampleInputPassword1"
-              value={patient.contactDetails}
+              value={schedule.availability}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Medical History
+              Doctor Id
             </label>
             <input
               type="text"
-              name="medicalHistory"
+              name="doctorId"
               className="form-control"
               id="exampleInputPassword1"
-              value={patient.medicalHistory}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Insurance Details
-            </label>
-            <input
-              type="text"
-              name="insuranceDetails"
-              className="form-control"
-              id="exampleInputPassword1"
-              value={patient.insuranceDetails}
+              value={schedule.doctorId}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -109,4 +96,4 @@ const PatientUpdate = () => {
   );
 };
 
-export default PatientUpdate;
+export default UpdateSchedule;

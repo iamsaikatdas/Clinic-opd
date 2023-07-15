@@ -3,43 +3,42 @@ import "../Nabvar.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const Patient = () => {
+const Schedule = () => {
   // get all patient
-  const [allPatient, setAllPatient] = useState();
-  const base_url = "http://localhost:8102/patient/getAll";
+  const [allSchedule, setAllSchedule] = useState();
+  const base_url = "http://localhost:8320/schedule/getAll";
   useEffect(() => {
-    axios.get(base_url).then((res) => setAllPatient(res.data));
+    axios.get(base_url).then((res) => setAllSchedule(res.data));
   }, []);
 
   // add patient
-  const [patient, setPatient] = useState({
-    firstName: "",
-    lastName: "",
-    contactDetails: "",
-    medicalHistory: "",
-    insuranceDetails: "",
+  const [schedule, setSchedule] = useState({
+    dayOfWeek: "",
+    timeSlot: "",
+    availability: "",
+    doctorId: "",
   });
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setPatient({ ...patient, [e.target.name]: value });
+    setSchedule({ ...schedule, [e.target.name]: value });
   };
   const HandelSubmit = (e) => {
     e.preventDefault();
 
-    const base_url = "http://localhost:8102/patient/add";
+    const base_url = "http://localhost:8320/schedule/add";
     axios
-      .post(base_url, patient)
-      .then((res) => alert("Doctor added successfully."))
+      .post(base_url, schedule)
+      .then((res) => alert("Schedule added successfully."))
       .catch((e) => console.log(e));
   };
 
   // DELETE patient
-  const DeletePatient = async (id) => {
-    const delete_base_url = `http://localhost:8102/patient/delete/${id}`;
+  const DeleteSchedule = async (id) => {
+    const delete_base_url = `http://localhost:8320/schedule/delete/${id}`;
     axios.delete(delete_base_url).then((res) => {
       console.log(res);
-      alert("Doctor deleted successfully", id);
+      alert("Schedule deleted successfully", id);
     });
   };
 
@@ -47,40 +46,39 @@ const Patient = () => {
     <>
       <div className="show-doctor">
         <div className="container">
-          <h1>All Patient</h1>
+          <h1>All Schedule</h1>
           <table className="table">
             <thead>
               <tr>
                 <th>Sl No.</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Contact Details</th>
-                <th>Medical History</th>
-                <th>Insurance Details</th>
-                <th>Action</th>
+                <th>Day of Week</th>
+                <th>Time Slot</th>
+                <th>Availability</th>
+                <th>Doctor Id</th>
               </tr>
             </thead>
-            {allPatient ? (
+            {allSchedule ? (
               <tbody>
-                {allPatient?.map((d) => {
+                {allSchedule?.map((d) => {
                   return (
                     <>
-                      <tr key={d.patientId}>
-                        <td>{d.patientId}</td>
-                        <td>{d.firstName}</td>
-                        <td>{d.lastName}</td>
-                        <td>{d.contactDetails}</td>
-                        <td>{d.medicalHistory}</td>
-                        <td>{d.insuranceDetails}</td>
+                      <tr key={d.scheduleId}>
+                        <td>{d.scheduleId}</td>
+                        <td>{d.dayOfWeek}</td>
+                        <td>{d.timeSlot}</td>
+                        <td>{d.availability}</td>
+                        <td>{d.doctorId}</td>
                         <td className="d-flex justify-content-around align-items-center">
                           <p className="ed">
-                            <Link to={`/doctor/updateDoctor/${d.patientId}`}>
+                            <Link
+                              to={`/schedule/updateSchedule/${d.scheduleId}`}
+                            >
                               Edit
                             </Link>
                           </p>
                           <p
                             className="ed"
-                            onClick={() => DeletePatient(d.patientId)}
+                            onClick={() => DeleteSchedule(d.scheduleId)}
                           >
                             Delete
                           </p>
@@ -91,77 +89,64 @@ const Patient = () => {
                 })}
               </tbody>
             ) : (
-              "Please add doctor"
+              "Please add Schedule"
             )}
           </table>
         </div>
       </div>
       <div className="doctor">
-        <h1>Add Patient</h1>
+        <h1>Add Schedule</h1>
         <form onSubmit={HandelSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
-              First Name
+              Day of Week
             </label>
             <input
               type="text"
-              name="firstName"
+              name="dayOfWek"
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              value={patient.firstName}
+              value={schedule.dayOfWeek}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Last Name
+              Time Slot
             </label>
             <input
               type="text"
-              name="lastName"
+              name="timeSlot"
               className="form-control"
               id="exampleInputPassword1"
-              value={patient.lastName}
+              value={schedule.timeSlot}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Contact Details
+              Availability
             </label>
             <input
               type="text"
-              name="contactDetails"
+              name="availability"
               className="form-control"
               id="exampleInputPassword1"
-              value={patient.contactDetails}
+              value={schedule.availability}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Medical History
+              Doctor Id
             </label>
             <input
               type="text"
-              name="medicalHistory"
+              name="doctorId"
               className="form-control"
               id="exampleInputPassword1"
-              value={patient.medicalHistory}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Insurance Details
-            </label>
-            <input
-              type="text"
-              name="insuranceDetails"
-              className="form-control"
-              id="exampleInputPassword1"
-              value={patient.insuranceDetails}
+              value={schedule.doctorId}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -175,4 +160,4 @@ const Patient = () => {
   );
 };
 
-export default Patient;
+export default Schedule;
