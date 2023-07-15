@@ -4,58 +4,57 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 
-const DeleteDoctor = async (id)=>{
-  const base_url = `http://localhost:8100/doctor/delete/${id}`;
-  await axios.delete(base_url).then((res) => {
-    console.log(res);
-    alert("Doctor deleted successfully");
-  });
+const DeletePatient = async(id)=>{
+  const delete_base_url = `http://localhost:8102/patient/delete/${id}`;
+    axios.delete(delete_base_url).then((res) => {
+      console.log(res);
+      alert("Doctor deleted successfully", id);
+    });
 }
 
-const Doctor = () => {
-  const [allDoctor, setAllDoctor] = useState();
-
-  const base_url = "http://localhost:8100/doctor/getAll";
+const Patient = () => {
+  // get all patient
+  const [allPatient, setAllPatient] = useState();
+  const base_url = "http://localhost:8102/patient/getAll";
   useEffect(() => {
-    axios.get(base_url).then((res) => setAllDoctor(res.data));
-    //console.log(res));
-    // setAllDoctor(res.data[0].content));
+    axios.get(base_url).then((res) => setAllPatient(res.data));
   }, []);
-  // console.log(allDoctor);
 
-  // submit for
-  const [doctor, setDoctor] = useState({
+
+
+  // add patient
+  const [patient, setPatient] = useState({
     firstName: "",
     lastName: "",
     contactDetails: "",
-    specialization: "",
+    medicalHistory: "",
+    insuranceDetails:""
   });
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setDoctor({ ...doctor, [e.target.name]: value });
+    setPatient({ ...patient, [e.target.name]: value });
   };
-
-  const HandelSubmit = async (e) => {
+  const HandelSubmit = (e) => {
     e.preventDefault();
 
-    const base_url = "http://localhost:8100/doctor/add";
-    await axios
-      .post(base_url, doctor)
+    const base_url = "http://localhost:8102/patient/add";
+    axios
+      .post(base_url, patient)
       .then((res) => alert("Doctor added successfully."))
       .catch((e) => console.log(e));
   };
 
-  // DELETE doctor
-  function deleteDoctor(id){
-    DeleteDoctor(id)
+  // DELETE patient
+  function deletePatient(id){
+    DeletePatient(id);
   };
 
   return (
     <>
       <div className="show-doctor">
         <div className="container">
-          <h1>All doctors</h1>
+          <h1>All Patient</h1>
           <table className="table">
             <thead>
               <tr>
@@ -63,28 +62,30 @@ const Doctor = () => {
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Contact Details</th>
-                <th>Specialization</th>
+                <th>Medical History</th>
+                <th>Insurance Details</th>
                 <th>Action</th>
               </tr>
             </thead>
-            {allDoctor ? (
+            {allPatient ? (
               <tbody>
-                {allDoctor?.map((d) => {
+                {allPatient?.map((d) => {
                   return (
                     <>
-                      <tr key={d.doctorId}>
-                        <td>{d.doctorId}</td>
+                      <tr key={d.patientId}>
+                        <td>{d.patientId}</td>
                         <td>{d.firstName}</td>
                         <td>{d.lastName}</td>
                         <td>{d.contactDetails}</td>
-                        <td>{d.specialization}</td>
+                        <td>{d.medicalHistory}</td>
+                        <td>{d.insuranceDetails}</td>
                         <td className="d-flex justify-content-around align-items-center">
                           <p className="ed">
-                            <Link to={`/doctor/updateDoctor/${d.doctorId}`}>
+                            <Link to={`/doctor/updateDoctor/${d.patientId}`}>
                               Edit
                             </Link>
                           </p>
-                          <p className="ed" onClick={deleteDoctor(d.doctorId)}>
+                          <p className="ed" onClick={deletePatient(d.patientId)}>
                             Delete
                           </p>
                         </td>
@@ -100,7 +101,7 @@ const Doctor = () => {
         </div>
       </div>
       <div className="doctor">
-        <h1>Add Doctor</h1>
+        <h1>Add Patient</h1>
         <form onSubmit={HandelSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -112,7 +113,7 @@ const Doctor = () => {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              value={doctor.firstName}
+              value={patient.firstName}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -125,7 +126,7 @@ const Doctor = () => {
               name="lastName"
               className="form-control"
               id="exampleInputPassword1"
-              value={doctor.lastName}
+              value={patient.lastName}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -138,27 +139,35 @@ const Doctor = () => {
               name="contactDetails"
               className="form-control"
               id="exampleInputPassword1"
-              value={doctor.contactDetails}
+              value={patient.contactDetails}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Specialization
+          <label htmlFor="exampleInputPassword1" className="form-label">
+              Medical History
             </label>
-            <select
-              name="specialization"
-              class="form-select"
-              aria-label="Default select example"
-              value={doctor.specialization}
+            <input
+              type="text"
+              name="medicalHistory"
+              className="form-control"
+              id="exampleInputPassword1"
+              value={patient.medicalHistory}
               onChange={(e) => handleChange(e)}
-            >
-              <option selected>Select One</option>
-              <option value="Cardiology">Cardiology</option>
-              <option value="Neurology">Neurology</option>
-              <option value="Gyanacology">Gyanacology</option>
-              <option value="Dermatology">Dermatology</option>
-            </select>
+            />
+          </div>
+          <div className="mb-3">
+          <label htmlFor="exampleInputPassword1" className="form-label">
+              Insurance Details
+            </label>
+            <input
+              type="text"
+              name="insuranceDetails"
+              className="form-control"
+              id="exampleInputPassword1"
+              value={patient.insuranceDetails}
+              onChange={(e) => handleChange(e)}
+            />
           </div>
 
           <button type="submit" className="btn btn-primary">
@@ -170,4 +179,4 @@ const Doctor = () => {
   );
 };
 
-export default Doctor;
+export default Patient;

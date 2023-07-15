@@ -3,35 +3,35 @@ import "../Nabvar.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const UpdateDoctor = () => {
+const PatientUpdate = () => {
   const id = useParams();
   // submit form
-  const [doctor, setDoctor] = useState({
+  const [patient, setPatient] = useState({
     firstName: "",
     lastName: "",
     contactDetails: "",
-    specialization: "",
+    medicalHistory: "",
+    insuranceDetails:""
   });
 
   const handleChange = (e) => {
     const value = e.target.value;
-    setDoctor({ ...doctor, [e.target.name]: value });
+    setPatient({ ...patient, [e.target.name]: value });
   };
-
   const HandelSubmit = async (e) => {
     e.preventDefault();
 
-    const base_url = "http://localhost:8100/doctor/update/" + id;
+    const base_url = "http://localhost:8102/patient/update/"+id;
     await axios
-      .post(base_url, doctor)
-      .then((res) => alert("Doctor updated successfully."))
+      .post(base_url, patient)
+      .then((res) => alert("Doctor added successfully."))
       .catch((e) => console.log(e));
   };
 
   return (
     <>
       <div className="doctor">
-        <h1>Update Doctor</h1>
+        <h1>Add Patient</h1>
         <form onSubmit={HandelSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
@@ -43,7 +43,7 @@ const UpdateDoctor = () => {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              value={doctor.firstName}
+              value={patient.firstName}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -56,7 +56,7 @@ const UpdateDoctor = () => {
               name="lastName"
               className="form-control"
               id="exampleInputPassword1"
-              value={doctor.lastName}
+              value={patient.lastName}
               onChange={(e) => handleChange(e)}
             />
           </div>
@@ -69,30 +69,39 @@ const UpdateDoctor = () => {
               name="contactDetails"
               className="form-control"
               id="exampleInputPassword1"
-              value={doctor.contactDetails}
+              value={patient.contactDetails}
               onChange={(e) => handleChange(e)}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Specialization
+          <label htmlFor="exampleInputPassword1" className="form-label">
+              Medical History
             </label>
-            <select
-              name="specialization"
-              class="form-select"
-              aria-label="Default select example"
-              value={doctor.specialization}
+            <input
+              type="text"
+              name="medicalHistory"
+              className="form-control"
+              id="exampleInputPassword1"
+              value={patient.medicalHistory}
               onChange={(e) => handleChange(e)}
-            >
-              <option selected>Select One</option>
-              <option value="Cardiology">Cardiology</option>
-              <option value="Neurology">Neurology</option>
-              <option value="Gyanacology">Gyanacology</option>
-            </select>
+            />
+          </div>
+          <div className="mb-3">
+          <label htmlFor="exampleInputPassword1" className="form-label">
+              Insurance Details
+            </label>
+            <input
+              type="text"
+              name="insuranceDetails"
+              className="form-control"
+              id="exampleInputPassword1"
+              value={patient.insuranceDetails}
+              onChange={(e) => handleChange(e)}
+            />
           </div>
 
           <button type="submit" className="btn btn-primary">
-            submit
+            Submit
           </button>
         </form>
       </div>
@@ -100,4 +109,4 @@ const UpdateDoctor = () => {
   );
 };
 
-export default UpdateDoctor;
+export default PatientUpdate;
